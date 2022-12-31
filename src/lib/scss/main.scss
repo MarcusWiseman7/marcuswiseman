@@ -1,0 +1,14 @@
+@import 'reset';
+@import 'theme';
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    overflow-x: hidden;
+    user-select: none;
+    width: 100%;
+    min-height: 100vh;
+    color: #fff;
+}

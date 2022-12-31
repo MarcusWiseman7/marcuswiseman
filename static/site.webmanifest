@@ -1,0 +1,9 @@
+{
+    "name":"marcuswiseman",
+    "short_name":"marcus",
+    "description":"Marcus Wiseman web developer portfolio",
+    "icons":[],
+    "theme_color":"#ffffff",
+    "background_color":"#ffffff",
+    "display":"standalone"
+}
