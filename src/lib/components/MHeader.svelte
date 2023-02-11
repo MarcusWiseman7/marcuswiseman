@@ -56,9 +56,10 @@
         position: fixed;
         left: 0;
         top: 0;
-        width: 100%;
+        right: 0;
         padding: 14px;
         z-index: 1;
+        background-color: var(--color-light);
 
         @media (min-width: 1024px) {
             padding: 60px;
@@ -66,12 +67,16 @@
 
         .name {
             font-weight: 400;
-            font-size: 18px;
+            font-size: 22px;
             letter-spacing: 8px;
+            text-align: center;
+            width: 100%;
 
-            @media (min-width: 1024px) {
-                font-size: 22px;
+            @media (min-width: 600px) {
+                font-size: 28px;
                 letter-spacing: 10px;
+                width: auto;
+                text-align: left;
             }
         }
 
@@ -80,7 +85,7 @@
             font-size: 18px;
             letter-spacing: 3px;
             font-weight: 400;
-            border-bottom: 1px solid #fff;
+            border-bottom: 1px solid var(--color-dark);
             align-items: center;
 
             @media (min-width: 1024px) {

@@ -4,100 +4,112 @@
 
     // props
     export let project: IProject;
-
-    // data
-    let clamped = true;
-
-    // methods
-    const toggleClamp = (): void => {
-        clamped = !clamped;
-    };
 </script>
 
-<div class="project">
-    <div class="project__info">
-        <a href={'https://' + project.url} target="_blank"><h2 class="project__title">{project.title}</h2></a>
-        <p
-            class={`project__description ${clamped ? 'project__description--clamped' : ''}`}
-            on:click={toggleClamp}
-            on:keypress={toggleClamp}
-        >
-            {project.description}
-        </p>
-
-        <p class="project__check-it-out">
-            Check it out <a class="project__url" href={'https://' + project.url} target="_blank"
-                >{project.url.slice(0, -1)}</a
-            >
-        </p>
-    </div>
-
-    <a href={'https://' + project.url} target="_blank">
-        <picture class="project__image">
+<div class="card">
+    <div class="front">
+        <picture class="front__image">
             <source srcset={project.image.avif} type="image/avif" />
             <source srcset={project.image.webp} type="image/webp" />
             <img src={project.image.src} srcset={project.image.srcset} alt={project.image.alt} />
         </picture>
-    </a>
+    </div>
+
+    <div class="back">
+        <a href={'https://' + project.url} target="_blank" class="back__content">
+            <h2 class="back__title">{project.title}</h2>
+
+            <p class="back__description">
+                {project.description}
+            </p>
+
+            <p class="back__check-it-out">
+                Check it out <span class="back__url">{project.url.slice(0, -1)}</span>
+            </p>
+        </a>
+    </div>
 </div>
 
 <style lang="scss">
-    .project {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        gap: 30px;
+    .card {
+        width: 400px;
+        max-width: calc(100vw - 32px);
+        height: 250px;
+        perspective: 1000px;
         letter-spacing: 1px;
 
-        @media (min-width: 1024px) {
-            flex-direction: row;
-            justify-content: space-between;
+        .front,
+        .back {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            backface-visibility: hidden;
+            transition: transform 1.2s ease;
         }
 
-        &__info {
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
+        .front {
+            z-index: 2;
+            transform: rotateY(0deg);
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
 
-            @media (min-width: 1024px) {
-                max-width: 60%;
+            &__image {
+                width: 100%;
+                height: 100%;
+
+                img {
+                    height: 100%;
+                    max-height: 250px;
+                    width: 100%;
+                }
             }
         }
 
-        &__title {
-            font-size: 32px;
-        }
+        .back {
+            transform: rotateY(180deg);
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+            background-color: var(--color-light);
+            color: var(--color-dark);
 
-        &__description {
-            font-size: 18px;
-            font-weight: 300;
-            padding: 0 10px;
-            cursor: pointer;
+            &__content {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: space-around;
+            }
 
-            &--clamped {
-                display: -webkit-box;
-                -webkit-box-orient: vertical;
-                -webkit-line-clamp: 3;
-                overflow: hidden;
+            &__title {
+                font-size: 32px;
+            }
+
+            &__description {
+                font-size: 18px;
+                font-weight: 300;
+                padding: 0 10px;
+                text-align: justify;
+                padding: 0 20px;
+            }
+
+            &__check-it-out {
+                font-size: 18px;
+            }
+
+            &__url {
+                border-bottom: 1px solid var(--color-light);
+                width: fit-content;
             }
         }
 
-        &__check-it-out {
-            font-size: 18px;
-        }
+        &:hover {
+            .front {
+                transform: rotateY(-180deg);
+            }
 
-        &__url {
-            border-bottom: 1px solid #fff;
-            width: fit-content;
-        }
-
-        &__image {
-            display: flex;
-            justify-content: center;
-
-            img {
-                max-height: 250px;
-                width: auto;
+            .back {
+                transform: rotateY(0deg);
             }
         }
     }

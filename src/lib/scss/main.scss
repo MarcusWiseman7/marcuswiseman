@@ -10,5 +10,6 @@ body {
     user-select: none;
     width: 100%;
     min-height: 100vh;
-    color: #fff;
+    background-color: var(--color-light);
+    color: var(--color-dark);
 }

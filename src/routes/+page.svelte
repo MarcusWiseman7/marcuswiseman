@@ -7,7 +7,7 @@
     import MProject from '$lib/components/MProject.svelte';
 
     // images
-    import pSrc from '$lib/assets/images/3.jpg';
+    import pSrc from '$lib/assets/images/2.jpg';
     import svelteLogo from '$lib/assets/icons/logos/svelte.svg';
     import sveltekitLogo from '$lib/assets/icons/logos/sveltekit.svg';
     import vueLogo from '$lib/assets/icons/logos/vue.svg';
@@ -15,10 +15,17 @@
     import typescriptLogo from '$lib/assets/icons/logos/typescript.svg';
     import scssLogo from '$lib/assets/icons/logos/sass.svg';
     import sanityLogo from '$lib/assets/icons/logos/sanity.svg';
+    import shopifyLogo from '$lib/assets/icons/logos/shopify.svg';
     import githubLogo from '$lib/assets/icons/logos/github.png';
     import linkedinLogo from '$lib/assets/icons/logos/linkedin.png';
+    import MFooter from '$lib/components/MFooter.svelte';
+    import codeImage from '$lib/assets/images/code.webp';
+    import funArrowImage from '$lib/assets/icons/fun-arrow.svg';
+    import { onMount } from 'svelte';
 
     // data
+    let monitoringScroll = false;
+    let stickyClass = false;
     const techStack: ITech[] = [
         { name: 'svelte', url: 'https://svelte.dev/', icon: svelteLogo, modifiers: ['padding-x'] },
         { name: 'svelteKit', url: 'https://kit.svelte.dev/', icon: sveltekitLogo, modifiers: ['padding-x'] },
@@ -27,13 +34,13 @@
         { name: 'typescript', url: 'https://typescriptlang.org/', icon: typescriptLogo, modifiers: [] },
         { name: 'sass', url: 'https://sass-lang.com/', icon: scssLogo, modifiers: ['padding-y'] },
         { name: 'sanity', url: 'https://sanity.io/', icon: sanityLogo, modifiers: ['bigger-img'] },
+        { name: 'shopify', url: 'https://shopify.com/', icon: shopifyLogo, modifiers: ['padding-x'] },
     ];
     const projects: IProject[] = [
         {
             title: 'Abadi Art',
             url: 'abadiart.org/',
-            description:
-                'Abadi Art is a cultural organization, which promotes art for social change. Through activities including exhibitions, projects and involving communities and artists. Through its work Abadi Art also seeks to demonstrate that a deep engagement with social issues and communities has the ability to enrich art. It is with good reason that community art and art for social change constitute one of the most important and exciting trends in the art world today. Just as art can subvert existing social norms, an engagement with socially engaged art can allow a transformation of the very meaning of what is art, who is an artist and what are the materials an artist works with. People centred art could include for example a range of materials, including themselves, their homes and everyday objects from in their daily lives. The inclusion of representations of everyday life can often be experienced as a simple but powerful source of connection between marginalized communities and the audience. Socially engaged art promoted by us also enables artists who might otherwise work as individuals on their own to be part of spaces in which shared creative energy flows.',
+            description: 'Abadi Art is a cultural organization, which promotes art for social change',
             image: {
                 src: 'https://res.cloudinary.com/dqrpaoopz/image/upload/v1667478430/marcus/abadiart_250_yd9iti.jpg',
                 srcset: 'https://res.cloudinary.com/dqrpaoopz/image/upload/v1667478431/marcus/abadiart_500_x70ry2.jpg',
@@ -45,7 +52,7 @@
         {
             title: 'Find brews',
             url: 'find-brews.com/',
-            description: 'Social app/site, reviews, pictures, blogs, friends, find rank and enjoy beer and kombucha',
+            description: 'Social app/site, reviews, pictures, blogs, friends. Find, rank, and enjoy beer and kombucha',
             image: {
                 src: pSrc,
                 srcset: pSrc,
@@ -57,7 +64,7 @@
         {
             title: 'Sokol Lipa',
             url: 'sokollipa.cz/',
-            description: `My wife's hometown football club, Sokol Lipa, featuring our nephew Tomas and fans and supporters from the whole family ;) from the village of Lipa, Czech Republic`,
+            description: `My wife's hometown football club featuring our nephew Tomas ;)`,
             image: {
                 src: 'https://res.cloudinary.com/dqrpaoopz/image/upload/v1667478431/marcus/sokollipa_250_qz8eop.jpg',
                 srcset: 'https://res.cloudinary.com/dqrpaoopz/image/upload/v1667478431/marcus/sokollipa_500_v2rvhx.jpg',
@@ -72,26 +79,84 @@
     const goMyWork = (): void => {
         const el = document.getElementById('my-work');
         if (el) {
-            const top = el?.getBoundingClientRect().top;
+            const top = window.scrollY + el?.getBoundingClientRect().top;
             window.scrollTo(0, top);
         }
     };
+
+    // const checkWindowSize = (): void => {
+    //     if (window.innerWidth < 600) {
+    //         setupScrolling();
+    //         monitoringScroll = true;
+    //     } else if (monitoringScroll) {
+    //         removeScrolling();
+    //         monitoringScroll = false;
+    //     }
+    // };
+
+    // const setupScrolling = (): void => {
+    //     document.addEventListener('scroll', onScroll, { passive: true });
+    // };
+
+    // const removeScrolling = (): void => {
+    //     document.removeEventListener('scroll', onScroll);
+    // };
+
+    // const onScroll = (): void => {
+    //     const mainEl = document.getElementById('main');
+
+    //     if (mainEl) {
+    //         const bottom = mainEl.getBoundingClientRect().bottom;
+    //         console.log('bottom, window.innerHeight :>> ', bottom, window.innerHeight);
+    //         if (bottom <= window.innerHeight + 20) {
+    //             mainEl.classList.add('sticky');
+    //         } else {
+    //             mainEl.classList.remove('sticky');
+    //         }
+    //         // if (document.documentElement.scrollHeight >= mainEl.scrollTop + mainEl.clientHeight) {
+    //         //     mainEl.classList.add('sticky');
+    //         //     // stickyClass = true;
+    //         // } else {
+    //         //     mainEl.classList.remove('sticky');
+    //         //     // stickyClass = false;
+    //         // }
+    //     }
+    // };
+
+    // onMount(() => {
+    //     // checkWindowSize();
+    //     document.addEventListener('scroll', onScroll, { passive: true });
+    // });
 </script>
 
-<main>
+<!-- <svelte:body on:resize={() => checkWindowSize()} /> -->
+
+<main id="main">
     <div class="introduction">
         <h1 class="introduction__title">I create websites.</h1>
-        <!-- I build impactful websites for interesting projects. -->
 
         <p class="introduction__about">
-            I believe that websites should be interesting, personal, and unique. <br /><br /> I work with you to make
-            sure your website is exactly what you need—whether that's a simple landing page or a full-on e-commerce
-            website with multiple shopping carts and payment options. <br /><br /> I specialize in custom projects that
-            give my clients the feeling of luxury and exclusivity, from simple sites to full online stores. My clients
-            are small businesses who don't have the time or resources to manage their own website, but don't want
-            something generic or cookie-cutter either. They're looking for something that will stand out from their
-            competitors and make them feel like their company is top-notch.
-            <a href="/contact-me" class="introduction__about__link">Let's talk</a>
+            <span>Hey there!</span>
+            <span>
+                I'm Marcus Wiseman, a remote American web developer currently living the dream in Spain! I've been
+                slinging code for the past 8 years, with expertise in Vue, Nuxt, Svelte, SvelteKit, Sass/SCSS, Node,
+                MongoDB, and JavaScript.
+            </span>
+            <span>
+                I'm a bit of a coding chameleon, always looking to learn new skills and stay on top of the latest tech
+                trends. From working on personal projects to developing international corporate websites, I've done it
+                all! If you're looking for a web developer who's passionate about what they do and loves to tackle new
+                challenges, then you've come to the right place.
+            </span>
+            <span>
+                When I'm not busy coding up a storm, you can find me exploring the beautiful streets of Spain or trying
+                out the latest tapas joint. And don't get me started on the wine! As they say, "work hard, play harder",
+                am I right?
+            </span>
+            <span>
+                So if you're ready to bring your project to life with a fun-loving and experienced web developer, then
+                let's do this! Together, we'll create something truly amazing that we can both be proud of.
+            </span>
         </p>
 
         <div class="introduction__see-my-work" on:click={goMyWork} on:keypress={goMyWork}>
@@ -102,8 +167,9 @@
     </div>
 </main>
 
-<section id="my-work" class="my-work">
+<section id="my-work" class="my-work section">
     <!-- projects -->
+    <h5 class="my-work__section-title">Some of my projects</h5>
     <div class="my-work__projects">
         {#each projects as project}
             <MProject {project} />
@@ -111,7 +177,7 @@
     </div>
 
     <!-- tech stack -->
-    <h5 class="my-work__tech__title">My favorite tech</h5>
+    <h5 class="my-work__section-title">My favorite tech</h5>
     <div class="my-work__tech">
         {#each techStack as techItem}
             <a
@@ -127,27 +193,44 @@
     <!-- contact info -->
     <h4 class="my-work__social__title">My social links</h4>
     <div class="my-work__social__links">
-        <a href="https://github.com/MarcusWiseman7/" target="_blank">
+        <a href="https://github.com/MarcusWiseman7" target="_blank">
             <img src={githubLogo} alt="GitHub" />
         </a>
-        <a href="https://www.linkedin.com/in/marcus-wiseman/" target="_blank">
+        <a href="https://www.linkedin.com/in/marcus-wiseman" target="_blank">
             <img src={linkedinLogo} alt="LinkedIn" />
         </a>
     </div>
 </section>
 
+<section class="section no-padding image-container">
+    <picture class="code-image">
+        <img src={codeImage} alt="Code" />
+    </picture>
+
+    <div class="caption-container">
+        <img src={funArrowImage} alt="Fun arrow" />
+        <p class="caption-text">Some of this site's code ;)</p>
+    </div>
+</section>
+
+<MFooter />
+
 <style lang="scss">
     main {
-        position: fixed;
-        top: 0;
-        left: 0;
-        height: 100vh;
         width: 100%;
-        padding: 0 14px;
         display: flex;
+        padding: 0 14px;
         justify-content: center;
 
+        // @media (min-width: 600px) {
+        //     padding: 60px 14px 10px;
+        // }
+
         @media (min-width: 1024px) {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
             padding: 0;
         }
 
@@ -157,8 +240,11 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            text-shadow: #000 1px 0 3px;
-            gap: 50px;
+            gap: 20px;
+
+            @media (min-width: 600px) {
+                gap: 50px;
+            }
 
             @media (min-width: 1024px) {
                 width: 66.666667%;
@@ -167,9 +253,13 @@
             }
 
             &__title {
-                font-size: 38px;
+                font-size: 32px;
                 font-weight: 400;
                 letter-spacing: 1px;
+
+                @media (min-width: 600px) {
+                    font-size: 38px;
+                }
 
                 @media (min-width: 1024px) {
                     font-size: 68px;
@@ -183,10 +273,14 @@
 
             &__about {
                 letter-spacing: 1px;
-                font-size: 18px;
+                font-size: 16px;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
 
-                &__link {
-                    border-bottom: 1px solid #fff;
+                @media (min-width: 600px) {
+                    font-size: 18px;
+                    gap: 20px;
                 }
             }
 
@@ -207,7 +301,7 @@
                     height: 60px;
                     width: 60px;
                     border-radius: 50%;
-                    background-color: lightblue;
+                    background-color: var(--color-accent);
                     z-index: -1;
                 }
 
@@ -218,22 +312,48 @@
         }
     }
 
-    .my-work {
+    .section {
         margin-top: 100vh;
-        width: 100%;
-        background-color: black;
+        background-color: var(--color-dark);
+        color: var(--color-accent);
         z-index: 1;
-        padding: 40px 14px;
+        padding: 40px 0;
         display: flex;
         flex-direction: column;
         align-items: center;
+        width: 100%;
+
+        @media (min-width: 600px) {
+            padding: 40px 14px;
+        }
+
+        @media (min-width: 1024px) {
+            padding: 80px 0;
+        }
+
+        &.no-padding {
+            padding: 0;
+        }
+    }
+
+    .my-work {
+        &__section-title {
+            font-size: 32px;
+            margin-bottom: 50px;
+        }
 
         &__projects {
             width: 100%;
             display: flex;
             flex-direction: column;
+            align-items: center;
             gap: 50px;
             margin-bottom: 50px;
+
+            @media (min-width: 1024px) {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
         }
 
         &__tech {
@@ -243,18 +363,19 @@
             justify-content: center;
             gap: 12px;
 
-            &__title {
-                font-size: 32px;
-                margin-bottom: 20px;
-            }
-
             &__item {
                 width: 140px;
                 height: 60px;
-                background-color: rgba(255, 255, 255, 0.07);
+                background-color: rgba(0, 0, 0, 0.3);
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                transition: transform 0.3s;
+
+                &:hover {
+                    transform: translateY(-5px);
+                    transition: transform 0.3s;
+                }
 
                 img {
                     max-height: 40px;
@@ -301,18 +422,57 @@
         }
 
         @media (min-width: 1024px) {
-            padding: 80px 0;
-
             &__projects {
                 width: 66.666667%;
-                max-width: 896px;
-                gap: 100px;
+                max-width: 1024px;
+                gap: 60px;
             }
 
             &__tech {
                 width: 66.666667%;
-                max-width: 896px;
+                max-width: 1024px;
             }
         }
     }
+
+    .image-container {
+        position: relative;
+
+        .code-image {
+            img {
+                width: 100%;
+                max-width: 100%;
+            }
+        }
+
+        .caption-container {
+            position: absolute;
+            top: -78px;
+            right: 0;
+            display: flex;
+            align-items: center;
+            color: var(--color-dark);
+            font-weight: 600;
+            font-size: 18px;
+            padding: 0 20px;
+            width: 100%;
+            justify-content: flex-end;
+            background-color: var(--color-light);
+
+            @media (min-width: 600px) {
+                font-size: 22px;
+            }
+
+            img {
+                padding-bottom: 30px;
+                margin-right: 10px;
+                rotate: 160deg;
+            }
+        }
+    }
+
+    // .sticky {
+    //     position: fixed;
+    //     bottom: 20px;
+    // }
 </style>
