@@ -5,9 +5,10 @@
     // components
     import trendingIcon from '$lib/assets/icons/trending-right.svg';
     import MProject from '$lib/components/MProject.svelte';
+    import MFooter from '$lib/components/MFooter.svelte';
 
     // images
-    import pSrc from '$lib/assets/images/2.jpg';
+    import beerLogo from '$lib/assets/icons/logos/beer.svg';
     import svelteLogo from '$lib/assets/icons/logos/svelte.svg';
     import sveltekitLogo from '$lib/assets/icons/logos/sveltekit.svg';
     import vueLogo from '$lib/assets/icons/logos/vue.svg';
@@ -18,14 +19,10 @@
     import shopifyLogo from '$lib/assets/icons/logos/shopify.svg';
     import githubLogo from '$lib/assets/icons/logos/github.png';
     import linkedinLogo from '$lib/assets/icons/logos/linkedin.png';
-    import MFooter from '$lib/components/MFooter.svelte';
     import codeImage from '$lib/assets/images/code.webp';
     import funArrowImage from '$lib/assets/icons/fun-arrow.svg';
-    import { onMount } from 'svelte';
 
     // data
-    let monitoringScroll = false;
-    let stickyClass = false;
     const techStack: ITech[] = [
         { name: 'svelte', url: 'https://svelte.dev/', icon: svelteLogo, modifiers: ['padding-x'] },
         { name: 'svelteKit', url: 'https://kit.svelte.dev/', icon: sveltekitLogo, modifiers: ['padding-x'] },
@@ -54,8 +51,8 @@
             url: 'find-brews.com/',
             description: 'Social app/site, reviews, pictures, blogs, friends. Find, rank, and enjoy beer and kombucha',
             image: {
-                src: pSrc,
-                srcset: pSrc,
+                src: beerLogo,
+                srcset: beerLogo,
                 alt: 'beer',
                 webp: '',
                 avif: '',
@@ -83,85 +80,29 @@
             window.scrollTo(0, top);
         }
     };
-
-    // const checkWindowSize = (): void => {
-    //     if (window.innerWidth < 600) {
-    //         setupScrolling();
-    //         monitoringScroll = true;
-    //     } else if (monitoringScroll) {
-    //         removeScrolling();
-    //         monitoringScroll = false;
-    //     }
-    // };
-
-    // const setupScrolling = (): void => {
-    //     document.addEventListener('scroll', onScroll, { passive: true });
-    // };
-
-    // const removeScrolling = (): void => {
-    //     document.removeEventListener('scroll', onScroll);
-    // };
-
-    // const onScroll = (): void => {
-    //     const mainEl = document.getElementById('main');
-
-    //     if (mainEl) {
-    //         const bottom = mainEl.getBoundingClientRect().bottom;
-    //         console.log('bottom, window.innerHeight :>> ', bottom, window.innerHeight);
-    //         if (bottom <= window.innerHeight + 20) {
-    //             mainEl.classList.add('sticky');
-    //         } else {
-    //             mainEl.classList.remove('sticky');
-    //         }
-    //         // if (document.documentElement.scrollHeight >= mainEl.scrollTop + mainEl.clientHeight) {
-    //         //     mainEl.classList.add('sticky');
-    //         //     // stickyClass = true;
-    //         // } else {
-    //         //     mainEl.classList.remove('sticky');
-    //         //     // stickyClass = false;
-    //         // }
-    //     }
-    // };
-
-    // onMount(() => {
-    //     // checkWindowSize();
-    //     document.addEventListener('scroll', onScroll, { passive: true });
-    // });
 </script>
-
-<!-- <svelte:body on:resize={() => checkWindowSize()} /> -->
 
 <main id="main">
     <div class="introduction">
         <h1 class="introduction__title">I create websites.</h1>
 
-        <p class="introduction__about">
-            <span>Hey there!</span>
-            <span>
+        <div class="introduction__about">
+            <p>Hey there!</p>
+            <p>
                 I'm Marcus Wiseman, a remote American web developer currently living the dream in Spain! I've been
                 slinging code for the past 8 years, with expertise in Vue, Nuxt, Svelte, SvelteKit, Sass/SCSS, Node,
                 MongoDB, and JavaScript.
-            </span>
-            <span>
-                I'm a bit of a coding chameleon, always looking to learn new skills and stay on top of the latest tech
-                trends. From working on personal projects to developing international corporate websites, I've done it
-                all! If you're looking for a web developer who's passionate about what they do and loves to tackle new
-                challenges, then you've come to the right place.
-            </span>
-            <span>
+            </p>
+            <p>
                 When I'm not busy coding up a storm, you can find me exploring the beautiful streets of Spain or trying
                 out the latest tapas joint. And don't get me started on the wine! As they say, "work hard, play harder",
                 am I right?
-            </span>
-            <span>
-                So if you're ready to bring your project to life with a fun-loving and experienced web developer, then
-                let's do this! Together, we'll create something truly amazing that we can both be proud of.
-            </span>
-        </p>
+            </p>
+        </div>
 
         <div class="introduction__see-my-work" on:click={goMyWork} on:keypress={goMyWork}>
             <div class="introduction__see-my-work__circle" />
-            <span>SEE MY WORK</span>
+            <p>SEE MY WORK</p>
             <img src={trendingIcon} alt="Trending right" />
         </div>
     </div>
@@ -169,36 +110,61 @@
 
 <section id="my-work" class="my-work section">
     <!-- projects -->
-    <h5 class="my-work__section-title">Some of my projects</h5>
-    <div class="my-work__projects">
-        {#each projects as project}
-            <MProject {project} />
-        {/each}
+    <div class="my-work__section">
+        <h4 class="my-work__section__title">My projects</h4>
+        <div class="my-work__projects">
+            {#each projects as project}
+                <MProject {project} />
+            {/each}
+        </div>
+    </div>
+
+    <div class="my-work__section">
+        <p class="my-work__section__text">
+            I'm a bit of a coding chameleon, always looking to learn new skills and stay on top of the latest tech
+            trends. From working on personal projects to developing international corporate websites, I've done it all!
+            If you're looking for a web developer who's passionate about what they do and loves to tackle new
+            challenges, then you've come to the right place.
+        </p>
     </div>
 
     <!-- tech stack -->
-    <h5 class="my-work__section-title">My favorite tech</h5>
-    <div class="my-work__tech">
-        {#each techStack as techItem}
-            <a
-                class={`my-work__tech__item ${techItem.modifiers.map((m) => 'my-work__tech__item--' + m)}`}
-                href={techItem.url}
-                target="_blank"
+    <div class="my-work__section">
+        <h4 class="my-work__section__title">My favorite tech</h4>
+        <div class="my-work__tech">
+            {#each techStack as techItem}
+                <a
+                    class={`my-work__tech__item ${techItem.modifiers.map((m) => 'my-work__tech__item--' + m)}`}
+                    href={techItem.url}
+                    target="_blank"
+                >
+                    <img src={techItem.icon} alt={techItem.name} />
+                </a>
+            {/each}
+        </div>
+    </div>
+
+    <div class="my-work__section">
+        <p class="my-work__section__text">
+            So if you're ready to bring your project to life with a fun-loving and experienced web developer, then let's
+            do this! Together, we'll create something truly amazing that we can both be proud of. <a
+                href="/contact-me"
+                class="link">LET'S TALK!</a
             >
-                <img src={techItem.icon} alt={techItem.name} />
-            </a>
-        {/each}
+        </p>
     </div>
 
     <!-- contact info -->
-    <h4 class="my-work__social__title">My social links</h4>
-    <div class="my-work__social__links">
-        <a href="https://github.com/MarcusWiseman7" target="_blank">
-            <img src={githubLogo} alt="GitHub" />
-        </a>
-        <a href="https://www.linkedin.com/in/marcus-wiseman" target="_blank">
-            <img src={linkedinLogo} alt="LinkedIn" />
-        </a>
+    <div class="my-work__section">
+        <h4 class="my-work__section__title">My social links</h4>
+        <div class="my-work__social__links">
+            <a href="https://github.com/MarcusWiseman7" target="_blank">
+                <img src={githubLogo} alt="GitHub" />
+            </a>
+            <a href="https://www.linkedin.com/in/marcus-wiseman" target="_blank">
+                <img src={linkedinLogo} alt="LinkedIn" />
+            </a>
+        </div>
     </div>
 </section>
 
@@ -209,7 +175,7 @@
 
     <div class="caption-container">
         <img src={funArrowImage} alt="Fun arrow" />
-        <p class="caption-text">Some of this site's code ;)</p>
+        <p class="caption-text">Look behind the scenes ;)</p>
     </div>
 </section>
 
@@ -217,20 +183,17 @@
 
 <style lang="scss">
     main {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
         width: 100%;
+        padding: 80px 16px 0;
         display: flex;
-        padding: 0 14px;
         justify-content: center;
-
-        // @media (min-width: 600px) {
-        //     padding: 60px 14px 10px;
-        // }
+        align-items: center;
 
         @media (min-width: 1024px) {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 100vh;
             padding: 0;
         }
 
@@ -253,21 +216,12 @@
             }
 
             &__title {
-                font-size: 32px;
+                font-size: 38px;
                 font-weight: 400;
                 letter-spacing: 1px;
 
-                @media (min-width: 600px) {
-                    font-size: 38px;
-                }
-
                 @media (min-width: 1024px) {
                     font-size: 68px;
-                }
-
-                span {
-                    font-size: 30px;
-                    font-weight: 600;
                 }
             }
 
@@ -315,17 +269,13 @@
     .section {
         margin-top: 100vh;
         background-color: var(--color-dark);
-        color: var(--color-accent);
+        color: var(--color-light);
         z-index: 1;
-        padding: 40px 0;
+        padding: 40px 16px;
         display: flex;
         flex-direction: column;
         align-items: center;
         width: 100%;
-
-        @media (min-width: 600px) {
-            padding: 40px 14px;
-        }
 
         @media (min-width: 1024px) {
             padding: 80px 0;
@@ -337,9 +287,35 @@
     }
 
     .my-work {
-        &__section-title {
-            font-size: 32px;
-            margin-bottom: 50px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
+
+        &__section {
+            &__title {
+                font-size: 28px;
+                margin-bottom: 10px;
+                text-align: center;
+            }
+
+            &__text {
+                font-size: 22px;
+            }
+
+            .link {
+                color: var(--color-accent);
+                border-bottom: 1px solid var(--color-accent);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            gap: 80px;
+
+            &__section {
+                width: 66.666667%;
+                max-width: 1024px;
+            }
         }
 
         &__projects {
@@ -348,7 +324,6 @@
             flex-direction: column;
             align-items: center;
             gap: 50px;
-            margin-bottom: 50px;
 
             @media (min-width: 1024px) {
                 display: grid;
@@ -405,11 +380,6 @@
         }
 
         &__social {
-            &__title {
-                font-size: 28px;
-                margin: 50px 0 10px 0;
-            }
-
             &__links {
                 display: flex;
                 justify-content: center;
@@ -418,19 +388,6 @@
                 img {
                     height: 40px;
                 }
-            }
-        }
-
-        @media (min-width: 1024px) {
-            &__projects {
-                width: 66.666667%;
-                max-width: 1024px;
-                gap: 60px;
-            }
-
-            &__tech {
-                width: 66.666667%;
-                max-width: 1024px;
             }
         }
     }

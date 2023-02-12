@@ -15,14 +15,12 @@
 
     <slot />
 
-    <!-- APP MESSAGES -->
     {#if $appMessages?.length}
         {#each $appMessages as messageObj}
             <Message {messageObj} />
         {/each}
     {/if}
 
-    <!-- APP LOADING... -->
     {#if $loading}
         <MLoading />
     {/if}
@@ -40,24 +38,6 @@
 
         @media (min-width: 1024px) {
             padding-top: 155px;
-        }
-    }
-
-    .background-image {
-        position: fixed;
-        left: 0;
-        top: 0;
-        min-width: 100%;
-        height: 100vh;
-        z-index: -1;
-
-        background-color: rgba(0, 0, 0, 0.5);
-
-        img {
-            height: 100%;
-            min-width: 100%;
-            object-fit: cover;
-            opacity: 0.2;
         }
     }
 </style>

@@ -7,8 +7,8 @@
         width: 100%;
         z-index: 1;
         padding: 16px 0;
-        color: var(--color-accent);
-        background-color: var(--color-dark);
+        color: var(--color-dark);
+        background-color: var(--color-light);
 
         @media (min-width: 1024px) {
             padding: 24px 0;

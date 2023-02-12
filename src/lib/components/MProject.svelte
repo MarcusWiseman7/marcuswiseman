@@ -52,6 +52,7 @@
         .front {
             z-index: 2;
             transform: rotateY(0deg);
+            background-color: #fff;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
 
             &__image {
