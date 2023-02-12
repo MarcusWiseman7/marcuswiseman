@@ -50,6 +50,7 @@
             title: 'Find brews',
             url: 'find-brews.com/',
             description: 'Social app/site, reviews, pictures, blogs, friends. Find, rank, and enjoy beer and kombucha',
+            modifiers: ['svg'],
             image: {
                 src: beerLogo,
                 srcset: beerLogo,
@@ -186,15 +187,16 @@
         position: fixed;
         top: 0;
         left: 0;
-        height: 100vh;
+        height: calc(100vh - 60px);
         width: 100%;
-        padding: 80px 16px 0;
+        padding: 60px 16px 0;
         display: flex;
         justify-content: center;
         align-items: center;
 
         @media (min-width: 1024px) {
             padding: 0;
+            height: 100vh;
         }
 
         .introduction {
@@ -203,7 +205,7 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            gap: 20px;
+            gap: 50px;
 
             @media (min-width: 600px) {
                 gap: 50px;
@@ -293,6 +295,8 @@
         gap: 40px;
 
         &__section {
+            width: 100%;
+
             &__title {
                 font-size: 28px;
                 margin-bottom: 10px;
@@ -315,6 +319,10 @@
             &__section {
                 width: 66.666667%;
                 max-width: 1024px;
+
+                &__title {
+                    font-size: 42px;
+                }
             }
         }
 
@@ -346,6 +354,7 @@
                 align-items: center;
                 justify-content: center;
                 transition: transform 0.3s;
+                border-radius: var(--rounded);
 
                 &:hover {
                     transform: translateY(-5px);

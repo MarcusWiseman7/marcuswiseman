@@ -6,7 +6,7 @@
     export let project: IProject;
 </script>
 
-<div class="card">
+<div class={`card ${project.modifiers ? project.modifiers.map((m) => 'card--' + m).join(' ') : ''}`}>
     <div class="front">
         <picture class="front__image">
             <source srcset={project.image.avif} type="image/avif" />
@@ -32,9 +32,9 @@
 
 <style lang="scss">
     .card {
-        width: 400px;
+        width: 100%;
         max-width: calc(100vw - 32px);
-        height: 250px;
+        aspect-ratio: 1.618;
         perspective: 1000px;
         letter-spacing: 1px;
 
@@ -47,6 +47,7 @@
             left: 0;
             backface-visibility: hidden;
             transition: transform 1.2s ease;
+            border-radius: var(--rounded);
         }
 
         .front {
@@ -61,9 +62,20 @@
 
                 img {
                     height: 100%;
-                    max-height: 250px;
                     width: 100%;
+                    border-radius: var(--rounded);
                 }
+            }
+        }
+
+        &--svg .front__image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            img {
+                width: auto;
+                height: 75%;
             }
         }
 

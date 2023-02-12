@@ -2,6 +2,7 @@ export interface IProject {
     title: string;
     description: string;
     url: string;
+    modifiers?: string[];
     image: {
         alt: string;
         src: string;

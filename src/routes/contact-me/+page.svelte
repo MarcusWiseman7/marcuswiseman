@@ -27,7 +27,7 @@
 
     // success/error app messages
     const successMsg: IMessage = {
-        message: `Form submitted successfully! Please check your email for a reply from me!`,
+        message: `You've started a conversation! Please check your email for a reply from me!`,
         timeout: 6000,
         type: 'success',
         id: Date.now(),
@@ -157,6 +157,7 @@
         border: 1px solid #ccc;
         color: var(--color-dark);
         background-color: var(--color-dark);
+        border-radius: var(--rounded);
 
         h1 {
             color: var(--color-light);
@@ -182,6 +183,8 @@
             border: 1px solid #ccc;
             padding: 0.5em;
             font-size: 16px;
+            background-color: var(--color-light);
+            border-radius: var(--rounded);
 
             &:focus {
                 outline: none;
@@ -207,6 +210,7 @@
             font-size: 16px;
             border: none;
             cursor: pointer;
+            border-radius: var(--rounded);
 
             &:hover {
                 background-color: darken(#add8e6, 20%);
@@ -215,11 +219,6 @@
             &:disabled {
                 cursor: not-allowed;
             }
-        }
-
-        input,
-        textarea {
-            background-color: var(--color-light);
         }
 
         .input {
