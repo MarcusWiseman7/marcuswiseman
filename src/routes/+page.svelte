@@ -83,6 +83,35 @@
     };
 </script>
 
+<svelte:head>
+    <title>Marcus Wiseman | Web Developer in Spain | Vue, Nuxt, Svelte, Node, MongoDB, JavaScript</title>
+    <meta
+        property="og:title"
+        content="Marcus Wiseman | Web Developer in Spain | Vue, Nuxt, Svelte, Node, MongoDB, JavaScript"
+    />
+    <meta property="og:url" content="https://marcuswiseman.com/" />
+
+    <link rel="canonical" href="https://marcuswiseman.com/" />
+
+    <meta
+        name="description"
+        content="I'm a remote American web developer living in Spain, specializing in Vue, Nuxt, Svelte, Node, MongoDB, and JavaScript. With years of experience in freelance and full-stack development, I'm passionate about bringing your project to life!"
+    />
+    <meta
+        property="og:description"
+        content="I'm a remote American web developer living in Spain, specializing in Vue, Nuxt, Svelte, Node, MongoDB, and JavaScript. With years of experience in freelance and full-stack development, I'm passionate about bringing your project to life!"
+    />
+
+    <meta
+        name="keywords"
+        content="web developer, Vue, Nuxt, Svelte, Node, MongoDB, JavaScript, Spain, freelance, full-stack development"
+    />
+    <meta
+        property="og:keywords"
+        content="web developer, Vue, Nuxt, Svelte, Node, MongoDB, JavaScript, Spain, freelance, full-stack development"
+    />
+</svelte:head>
+
 <main id="main">
     <div class="introduction">
         <h1 class="introduction__title">I create websites.</h1>
@@ -436,9 +465,4 @@
             }
         }
     }
-
-    // .sticky {
-    //     position: fixed;
-    //     bottom: 20px;
-    // }
 </style>

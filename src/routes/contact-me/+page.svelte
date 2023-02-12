@@ -93,6 +93,27 @@
     };
 </script>
 
+<svelte:head>
+    <title>Contact Marcus Wiseman | Web Developer in Spain</title>
+    <meta property="og:title" content="Contact Marcus Wiseman | Web Developer in Spain" />
+    <meta property="og:url" content="https://marcuswiseman.com/contact-me" />
+
+    <link rel="canonical" href="https://marcuswiseman.com/contact-me" />
+
+    <meta
+        name="description"
+        id="meta-description"
+        content="Get in touch with Marcus Wiseman, a remote American web developer based in Spain. Whether you're looking for a freelance or full-stack developer, I'm here to bring your project to life!"
+    />
+    <meta
+        property="og:description"
+        content="Get in touch with Marcus Wiseman, a remote American web developer based in Spain. Whether you're looking for a freelance or full-stack developer, I'm here to bring your project to life!"
+    />
+
+    <meta name="keywords" content="contact, web developer, Spain, freelance, full-stack development" />
+    <meta property="og:keywords" content="contact, web developer, Spain, freelance, full-stack development" />
+</svelte:head>
+
 <div class="page">
     <form on:submit|preventDefault={handleSubmit}>
         <h1 class="title">Let's talk!</h1>
