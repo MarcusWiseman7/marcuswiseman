@@ -49,7 +49,8 @@
         {
             title: 'Find brews',
             url: 'find-brews.com/',
-            description: 'Social app/site, reviews, pictures, blogs, friends. Find, rank, and enjoy beer and kombucha',
+            description:
+                'Social app/site, reviews, pictures, blogs, friends. Find, rank, and enjoy beer and kombucha. Currently going through complete redesign...',
             modifiers: ['svg'],
             image: {
                 src: beerLogo,
