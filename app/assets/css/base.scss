@@ -1,0 +1,88 @@
+// Global base for marcuswiseman.com — only what cannot be scoped to a single
+// component. Everything else is scoped SCSS in the component that owns it.
+//
+// Colors, fonts, spacing, radii and shadows all come from nocturne.css. Nothing
+// here hard-codes a value the tokens already carry.
+// Spec: docs/design-handoff.md
+
+:root {
+  // Nocturne defines no monospace token, and the design's meta text (eyebrows,
+  // year ranges, stack labels) is monospace throughout. System stack, per the
+  // handoff — substitute a real mono face here if one is ever added.
+  --font-mono: ui-monospace, monospace;
+
+  // Horizontal page padding. Every full-width band uses this so their content
+  // edges line up down the page.
+  --page-gutter: clamp(20px, 6vw, 120px);
+
+  // The content column's measure, and the reading measure inside it.
+  --content-max: 1000px;
+  --measure: 66ch;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+}
+
+// The design sets links a step down from Nocturne's `a { color: accent }`:
+// accent-on-ground is only ~3:1, which is fine for chrome but not for
+// paragraph-size text.
+a {
+  color: var(--color-accent-300);
+  text-decoration: none;
+
+  &:hover {
+    color: var(--color-accent-200);
+  }
+}
+
+// Nocturne's signature rule: fades to transparent over 48px at each end rather
+// than stopping cleanly. The design draws it in neutral-800 (a step up from the
+// divider token) so it holds as a section separator.
+// Global because several components draw one.
+.rule {
+  height: 1px;
+  border: 0;
+  margin: 0;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--color-neutral-800) 48px,
+    var(--color-neutral-800) calc(100% - 48px),
+    transparent
+  );
+}
+
+// The shared content column. Every band, the masthead and the footer use it, so
+// their content edges line up down the page.
+//
+// Up to 1024px it hugs the left edge (the design's flush-left direction). Above
+// that it centres, which is why the masthead and footer carry an inner wrapper:
+// their background and border stay full-bleed while their contents follow the
+// column. Blocks narrower than the column (the contact band's 940px) stay
+// narrower and simply centre within it.
+.content-column {
+  max-width: var(--content-max);
+
+  @media (min-width: 1025px) {
+    margin-inline: auto;
+  }
+}
+
+// Meta text — eyebrows, year ranges, stack labels, the footer.
+// Global because it is the design's one cross-cutting type treatment.
+.meta {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--color-neutral-500);
+
+  &--eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+}

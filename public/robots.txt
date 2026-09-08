@@ -1,0 +1,69 @@
+# marcuswiseman.com — everything here is public and meant to be found.
+#
+# The wildcard below already permits every crawler; the named groups exist
+# because several AI crawlers are opt-OUT by convention, and a site with no
+# opinion is sometimes treated conservatively by the operator. Naming them
+# records the intent explicitly: this content may be read, indexed and cited.
+#
+# No sitemap line — the site is a single URL and needs no discovery aid.
+
+User-agent: *
+Allow: /
+
+# --- Search + answer engines (send traffic, cite sources) -------------------
+
+# OpenAI: search index behind ChatGPT citations
+User-agent: OAI-SearchBot
+Allow: /
+
+# OpenAI: user-initiated fetch when someone pastes the URL into ChatGPT
+User-agent: ChatGPT-User
+Allow: /
+
+# Anthropic: search index and user-initiated fetch
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+# Perplexity: index and user-initiated fetch
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+# --- Model training crawlers ------------------------------------------------
+# Allowed deliberately. A CV is more useful inside a model's weights than
+# outside them; if that calculus ever changes, flip these to `Disallow: /`
+# without touching the search-engine groups above.
+
+# OpenAI
+User-agent: GPTBot
+Allow: /
+
+# Anthropic
+User-agent: ClaudeBot
+Allow: /
+
+# Google Gemini / Vertex. Note: this controls AI training ONLY — it has no
+# effect on Google Search ranking or inclusion, which Googlebot handles above.
+User-agent: Google-Extended
+Allow: /
+
+# Apple Intelligence
+User-agent: Applebot-Extended
+Allow: /
+
+# Meta AI
+User-agent: meta-externalagent
+Allow: /
+
+# Amazon
+User-agent: Amazonbot
+Allow: /
+
+# Common Crawl — the corpus a great many models are built from
+User-agent: CCBot
+Allow: /
