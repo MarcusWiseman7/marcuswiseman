@@ -23,8 +23,11 @@ import { contact } from '~/data/site'
         revenue funnel.
       </p>
 
+      <!-- the PDF stays the primary action, but /cv is the version a crawler
+           (and anyone on a phone) can actually read, so it is offered beside it -->
       <div class="hero__actions">
         <a class="btn btn-primary" :href="contact.cv" download>Download CV (PDF)</a>
+        <NuxtLink class="btn btn-ghost" to="/cv">Read the full CV</NuxtLink>
         <a class="btn btn-ghost" :href="`mailto:${contact.email}`">{{ contact.email }}</a>
       </div>
 

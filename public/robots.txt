@@ -5,7 +5,10 @@
 # opinion is sometimes treated conservatively by the operator. Naming them
 # records the intent explicitly: this content may be read, indexed and cited.
 #
-# No sitemap line — the site is a single URL and needs no discovery aid.
+# The sitemap URL is absolute and hardcoded, as the format requires. This file
+# is static, so a preview deploy serves the production URL here — harmless,
+# since preview hosts should not be indexed at all.
+Sitemap: https://marcuswiseman.com/sitemap.xml
 
 User-agent: *
 Allow: /

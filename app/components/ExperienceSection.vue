@@ -5,14 +5,16 @@ import { experience } from '~/data/site'
 <template>
   <SectionBand id="experience" eyebrow="03 — Experience">
     <ul class="experience">
-      <li v-for="item in experience" :key="item.role" class="experience__entry">
+      <li v-for="item in experience" :key="`${item.company}-${item.period}`" class="experience__entry">
         <p class="meta experience__years">{{ item.years }}</p>
         <div class="experience__detail">
-          <h3 class="experience__role">{{ item.role }}</h3>
+          <h3 class="experience__role">{{ item.shortRole }} · {{ item.company }}</h3>
           <p class="experience__copy">{{ item.description }}</p>
         </div>
       </li>
     </ul>
+
+    <slot />
   </SectionBand>
 </template>
 

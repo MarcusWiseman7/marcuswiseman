@@ -1,9 +1,14 @@
 <script setup lang="ts">
 import { stackGroups } from '~/data/site'
+
+// The numbered eyebrow belonged to the home page's run of sections; on /about
+// the section is titled plainly. Defaulted rather than required so the caller
+// only states it when it differs.
+withDefaults(defineProps<{ eyebrow?: string }>(), { eyebrow: '04 — Stack' })
 </script>
 
 <template>
-  <SectionBand id="stack" eyebrow="04 — Stack">
+  <SectionBand id="stack" :eyebrow="eyebrow">
     <div class="stack">
       <div v-for="group in stackGroups" :key="group.label">
         <h3 class="stack__label">{{ group.label }}</h3>
@@ -14,6 +19,8 @@ import { stackGroups } from '~/data/site'
         </ul>
       </div>
     </div>
+
+    <slot />
   </SectionBand>
 </template>
 

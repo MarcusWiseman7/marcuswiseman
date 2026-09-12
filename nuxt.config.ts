@@ -18,7 +18,13 @@ export default defineNuxtConfig({
   // /api/contact has to keep running.
   routeRules: {
     '/': { prerender: true },
+    '/about': { prerender: true },
+    '/cv': { prerender: true },
+    '/migrations': { prerender: true },
+    '/work': { prerender: true },
+    '/work/santevet-funnel': { prerender: true },
     '/llms.txt': { prerender: true },
+    '/sitemap.xml': { prerender: true },
   },
 
   // Nocturne is the design system (tokens + components), synced verbatim from

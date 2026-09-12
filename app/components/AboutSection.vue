@@ -8,10 +8,13 @@
 // renders in place of the empty frame below. If the only portrait available
 // has a light background, remove the `lighten` class from the figure instead.
 const portrait: string | null = null
+
+// See the note in StackSection: the numbered eyebrow was the home page's.
+withDefaults(defineProps<{ eyebrow?: string }>(), { eyebrow: '05 — About' })
 </script>
 
 <template>
-  <SectionBand id="about" eyebrow="05 — About">
+  <SectionBand id="about" :eyebrow="eyebrow">
     <div class="about">
       <figure class="about__portrait lighten">
         <img

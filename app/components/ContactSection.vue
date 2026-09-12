@@ -12,6 +12,24 @@ const errors = reactive<Record<'name' | 'email' | 'message', string>>({
 const status = ref<Status>('idle')
 const submitError = ref('')
 
+// Focus is what actually guarantees a screen reader hears the outcome: a live
+// region inserted into the DOM together with its text is not reliably
+// announced, because there was nothing there to diff against. role="status"
+// and role="alert" stay on as belt and braces, but the focus move is the part
+// that works everywhere.
+const sentEl = ref<HTMLElement | null>(null)
+const errorEl = ref<HTMLElement | null>(null)
+
+// In DOM order — a failed submit sends focus to the first field that failed.
+// An error rendered under a field says nothing while focus is still parked on
+// the Send button, and aria-describedby only pays off once the field is
+// reached again.
+const FIELD_IDS: Record<keyof typeof errors, string> = {
+  name: 'c-name',
+  email: 'c-email',
+  message: 'c-msg',
+}
+
 // Spam guard: a field no human sees. Bots fill it, and we silently accept.
 const website = ref('')
 
@@ -38,7 +56,11 @@ function clear(field: keyof typeof errors) {
 async function onSubmit() {
   if (status.value === 'submitting') return
   submitError.value = ''
-  if (!validate()) return
+  if (!validate()) {
+    const first = (Object.keys(FIELD_IDS) as (keyof typeof errors)[]).find((f) => errors[f])
+    if (first) document.getElementById(FIELD_IDS[first])?.focus()
+    return
+  }
 
   status.value = 'submitting'
   try {
@@ -47,11 +69,15 @@ async function onSubmit() {
       body: { ...form, website: website.value },
     })
     status.value = 'sent'
+    await nextTick()
+    sentEl.value?.focus()
   } catch (e: unknown) {
     status.value = 'error'
     submitError.value =
       (e as { data?: { message?: string } })?.data?.message
       ?? 'Something went wrong sending that. Email me directly and it will get through.'
+    await nextTick()
+    errorEl.value?.focus()
   }
 }
 </script>
@@ -69,19 +95,21 @@ async function onSubmit() {
           <li><a :href="`mailto:${contact.email}`">{{ contact.email }}</a></li>
           <li>
             <a :href="contact.github" target="_blank" rel="noopener noreferrer">
-              {{ contact.githubLabel }}
+              {{ contact.githubLabel }}<span class="visually-hidden"> (opens in a new tab)</span>
             </a>
           </li>
           <li>
             <a :href="contact.linkedin" target="_blank" rel="noopener noreferrer">
-              {{ contact.linkedinLabel }}
+              {{ contact.linkedinLabel }}<span class="visually-hidden"> (opens in a new tab)</span>
             </a>
           </li>
         </ul>
       </div>
 
-      <!-- the success message replaces the form outright -->
-      <p v-if="status === 'sent'" class="contact__sent" role="status">
+      <!-- The success message replaces the form outright, which also destroys
+           the Send button focus was sitting on — so it takes focus itself
+           (tabindex="-1": a target for focus, never a tab stop). -->
+      <p v-if="status === 'sent'" ref="sentEl" class="contact__sent" role="status" tabindex="-1">
         Thanks — that's with me. I'll reply from {{ contact.email }}.
       </p>
 
@@ -95,6 +123,7 @@ async function onSubmit() {
             type="text"
             placeholder="Your name"
             autocomplete="name"
+            required
             :aria-invalid="!!errors.name"
             :aria-describedby="errors.name ? 'c-name-error' : undefined"
             @input="clear('name')"
@@ -111,6 +140,7 @@ async function onSubmit() {
             type="email"
             placeholder="you@company.com"
             autocomplete="email"
+            required
             :aria-invalid="!!errors.email"
             :aria-describedby="errors.email ? 'c-email-error' : undefined"
             @input="clear('email')"
@@ -126,6 +156,7 @@ async function onSubmit() {
             class="input"
             rows="4"
             placeholder="A sentence or two on the project, timeline and stack."
+            required
             :aria-invalid="!!errors.message"
             :aria-describedby="errors.message ? 'c-msg-error' : undefined"
             @input="clear('message')"
@@ -143,7 +174,9 @@ async function onSubmit() {
           {{ status === 'submitting' ? 'Sending…' : 'Send' }}
         </button>
 
-        <p v-if="submitError" class="contact__error" role="alert">{{ submitError }}</p>
+        <p v-if="submitError" ref="errorEl" class="contact__error" role="alert" tabindex="-1">
+          {{ submitError }}
+        </p>
       </form>
     </div>
   </section>
@@ -200,10 +233,47 @@ async function onSubmit() {
     display: grid;
     gap: var(--space-4);
     align-content: start;
+
+    // Nocturne draws .input's boundary in --color-divider (text at 16%), which
+    // over this section's ground composites to 1.04:1 — the control has no
+    // visible edge here at all, and its surface fill is only 1.51:1 against
+    // the band. On a mid-luminance ground the fill cannot carry the
+    // distinction (darkening it gains nothing), so the border does: neutral-300
+    // is 6.75:1 against the band and 11.8:1 against the fill.
+    .input {
+      border-color: var(--color-neutral-300);
+
+      &:hover {
+        border-color: var(--color-neutral-100);
+      }
+
+      // The fields are `required` so AT announces them as mandatory, but
+      // validation is ours, not the browser's (hence `novalidate`) — and
+      // Nocturne has no danger role. Firefox paints its own glow on a
+      // required field the reader has passed through and left empty, which
+      // would put a second error language on the form.
+      &:user-invalid {
+        box-shadow: none;
+      }
+
+      // The scoped attribute out-specifies nocturne's `.input:focus-visible`,
+      // so the focused border has to be restated here — and the accent ring is
+      // only 3.1:1 on this ground, a hair over the 3:1 floor, where the ramp's
+      // light step is 8:1.
+      &:focus-visible {
+        border-color: var(--color-accent-200);
+        outline-color: var(--color-accent-200);
+      }
+    }
   }
 
+  // .btn-primary paints accent ink and an accent border: 3.1:1 at the glow end
+  // of this gradient, at 14px. The accent ramp's light steps carry the same
+  // treatment at 8.2:1 (ink) and 6.7:1 (border).
   &__send {
     justify-self: start;
+    color: var(--color-accent-200);
+    border-color: var(--color-accent-300);
   }
 
   // Nocturne is a mono palette with no error/danger role, so validation
@@ -218,6 +288,7 @@ async function onSubmit() {
 
   &__sent {
     align-self: start;
+    outline: none; // takes focus programmatically; it is prose, not a control
     font-size: 16px;
     line-height: 1.6;
     color: var(--color-neutral-100);

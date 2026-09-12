@@ -73,6 +73,30 @@ a {
   }
 }
 
+// Screen-reader-only text. Used for the "(opens in a new tab)" suffix the
+// external links carry — the visual cue is the destination itself, but nothing
+// in the accessible name says the tab is about to change.
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+// The masthead is sticky above 620px, so anything the browser scrolls into
+// view — a #fragment target, or an element taking focus as you tab down the
+// page — otherwise lands underneath it. :where() keeps the specificity at zero.
+@media (min-width: 621px) {
+  :where(a, button, input, textarea, select, summary, [tabindex], [id], h1, h2, h3) {
+    scroll-margin-top: calc(var(--space-8) * 3);
+  }
+}
+
 // Meta text — eyebrows, year ranges, stack labels, the footer.
 // Global because it is the design's one cross-cutting type treatment.
 .meta {

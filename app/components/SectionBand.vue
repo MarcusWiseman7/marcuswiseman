@@ -36,10 +36,15 @@ defineProps<{
     gap: var(--space-8);
     // width and centring come from .content-column
 
-    // the 180px eyebrow column collapses awkwardly below ~560px, so the
-    // eyebrow stacks above its content there (the handoff's one sanctioned
-    // media query — the rest of the page is fluid)
-    @media (max-width: 560px) {
+    // The eyebrow rail collapses here and the eyebrow stacks above its content.
+    //
+    // The handoff put this at 560px, written when every band held prose at
+    // 66ch. It does not hold now that bands carry their own two-column rows
+    // (the migrations record, the CV's skill table, the work rows): between 560
+    // and 760 the 180px rail plus a second label column left ~140px for the
+    // actual content, and the CV's frontend skills wrapped to eleven lines.
+    // Below 760 the rail is worth less than the width it costs.
+    @media (max-width: 760px) {
       grid-template-columns: minmax(0, 1fr);
       gap: var(--space-6);
     }

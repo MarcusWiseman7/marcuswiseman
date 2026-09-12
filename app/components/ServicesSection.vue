@@ -23,6 +23,9 @@ import { services, migrations } from '~/data/site'
           Four production migrations, none of them a rewrite from scratch.
         </p>
       </div>
+
+      <!-- the page that carries the practice in full supplies this -->
+      <slot />
     </div>
   </SectionBand>
 </template>
